@@ -7,7 +7,7 @@ ne kolonen B jane Emer Mbiemer i disa personave te kontaktit
 ne kolonen C eshte domain i email qe perdorin
 nga kolona F ne H do te jete output
 qellimi eshte qe krijohen nje sere kombinimesh me emrin e gjithesecilit person qe gjenden ne kolonen B
-po te shikosh ne kolonen H aty gjen kombinime te personit "Marius Vladu"
+po te shikosh ne kolonen H aty gjen kombinime te personit "TEST test"
 
 
 
