@@ -1,4 +1,9 @@
-package al.algorthyhm.service;import java.io.File;
+package al.algorthyhm.service;
+
+
+
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +23,8 @@ public class ExcelService {
     private static Logger logger = LogManager.getLogger(ExcelService.class);
 
     private String filePath;
+    private final String SOURCE_PATH = "C:\\Users\\Lejrat Mesi\\Desktop\\New Microsoft Excel Worksheet.xlsx";
+    private final String DESTINATION_PATH = "C:\\Users\\Lejrat Mesi\\Desktop\\test.xlsx";
 
     public ExcelService(String filePath) {
         this.filePath = filePath;
@@ -27,7 +34,7 @@ public class ExcelService {
 
         logger.info("read method >>>>>>>>>");
         try {
-            FileInputStream inputStream = new FileInputStream(new File("C:\\Users\\Lejrat Mesi\\Desktop/New Microsoft Excel Worksheet.xlsx"));
+            FileInputStream inputStream = new FileInputStream(new File(SOURCE_PATH));
             Workbook workbook = new XSSFWorkbook(inputStream);
 
             // Getting the first sheet in the Workbook
@@ -77,12 +84,11 @@ public class ExcelService {
         ExcelUtils.writeData(personList,sheet);
 
         // Write the Workbook to a file
-        try (FileOutputStream outputStream = new FileOutputStream("test.xlsx")) {
+        try (FileOutputStream outputStream = new FileOutputStream(DESTINATION_PATH)) {
             workbook.write(outputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         // Close the Workbook
         try {
             workbook.close();
