@@ -23,18 +23,18 @@ public class ExcelService {
     private static Logger logger = LogManager.getLogger(ExcelService.class);
 
     private String filePath;
-    private final String SOURCE_PATH = "C:\\Users\\Lejrat Mesi\\Desktop\\New Microsoft Excel Worksheet.xlsx";
-    private final String DESTINATION_PATH = "C:\\Users\\Lejrat Mesi\\Desktop\\test.xlsx";
+    private String destiantionPath;
 
-    public ExcelService(String filePath) {
+    public ExcelService(String filePath, String destinationPath) {
         this.filePath = filePath;
+        this.destiantionPath = destinationPath;
     }
 
     public List<Person> read() {
 
         logger.info("read method >>>>>>>>>");
         try {
-            FileInputStream inputStream = new FileInputStream(new File(SOURCE_PATH));
+            FileInputStream inputStream = new FileInputStream(new File(filePath));
             Workbook workbook = new XSSFWorkbook(inputStream);
 
             // Getting the first sheet in the Workbook
@@ -84,7 +84,7 @@ public class ExcelService {
         ExcelUtils.writeData(personList,sheet);
 
         // Write the Workbook to a file
-        try (FileOutputStream outputStream = new FileOutputStream(DESTINATION_PATH)) {
+        try (FileOutputStream outputStream = new FileOutputStream(destiantionPath)) {
             workbook.write(outputStream);
         } catch (IOException e) {
             e.printStackTrace();

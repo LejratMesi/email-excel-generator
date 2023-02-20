@@ -9,9 +9,13 @@ public class ApplicationMain {
 
         Scanner input = new Scanner(System.in);
         System.out.println("Programi po vazhdon");
+        System.out.println("Ju lutem vendosni pathin e filet excel qe doni te lexoni");
+        String path = input.nextLine();
+        System.out.println("Ju lutem vendosni pathin e filet excel qe doni te gjenerohet");
+        String destinationPath = input.nextLine();
         System.out.println("Programi po gjeneron excelin");
-        ExcelService reader = new ExcelService("path");
+        ExcelService reader = new ExcelService(path, destinationPath);
         reader.write();
-        System.out.println("Gjenerimi i excelit mbraoj .....");
+
     }
 }
