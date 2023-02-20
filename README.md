@@ -10,3 +10,10 @@ qellimi eshte qe krijohen nje sere kombinimesh me emrin e gjithesecilit person q
 po te shikosh ne kolonen H aty gjen kombinime te personit "Marius Vladu"
 
 
+
+Per ta exec jarin qe ndodhe tne target/email-generator.jar duhet qe te shkruani kte commanden 
+
+```
+ java -jar excel-generator-1.0-SNAPSHOT.jar
+```
+
