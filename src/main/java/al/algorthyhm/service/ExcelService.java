@@ -40,12 +40,13 @@ public class ExcelService {
             // Getting the first sheet in the Workbook
             Sheet sheet = workbook.getSheetAt(0);
             int rowNumber = 0;
-            Providers provider = new Providers();
+            Providers provider = null;
             List<Person> personList = new ArrayList<>();
 
             for (Row row : sheet) {
 
-                if (rowNumber == 0){
+                if (row.getLastCellNum() == 3){
+                    provider = new Providers();
                     provider.setProvider(row.getCell(row.getLastCellNum()- 1).getStringCellValue());
                     provider.setCompay(row.getCell(row.getFirstCellNum()).getStringCellValue());
                     rowNumber++;
