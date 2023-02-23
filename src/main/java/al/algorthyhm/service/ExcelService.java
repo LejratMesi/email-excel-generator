@@ -1,9 +1,6 @@
 package al.algorthyhm.service;
 
 
-
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelService {
 
-    private static Logger logger = LogManager.getLogger(ExcelService.class);
+    private final static Logger logger = LogManager.getLogger(ExcelService.class);
 
     private String filePath;
     private String destiantionPath;
@@ -34,12 +31,11 @@ public class ExcelService {
 
         logger.info("read method >>>>>>>>>");
         try {
-            FileInputStream inputStream = new FileInputStream(new File(filePath));
+            FileInputStream inputStream = new FileInputStream(filePath);
             Workbook workbook = new XSSFWorkbook(inputStream);
 
             // Getting the first sheet in the Workbook
             Sheet sheet = workbook.getSheetAt(0);
-            int rowNumber = 0;
             Providers provider = null;
             List<Person> personList = new ArrayList<>();
 
@@ -49,7 +45,6 @@ public class ExcelService {
                     provider = new Providers();
                     provider.setProvider(row.getCell(row.getLastCellNum()- 1).getStringCellValue());
                     provider.setCompay(row.getCell(row.getFirstCellNum()).getStringCellValue());
-                    rowNumber++;
                 } else {
                      Person person = new Person();
                      for (Cell cell : row) {
@@ -63,7 +58,6 @@ public class ExcelService {
 
             }
 
-            // Closing the Workbook and the FileInputStream
             workbook.close();
             inputStream.close();
             logger.info("end of read method");
@@ -84,18 +78,13 @@ public class ExcelService {
         List<Person> personList = read();
         ExcelUtils.writeData(personList,sheet);
 
-        // Write the Workbook to a file
         try (FileOutputStream outputStream = new FileOutputStream(destiantionPath)) {
             workbook.write(outputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Close the Workbook
-        try {
             workbook.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
 }

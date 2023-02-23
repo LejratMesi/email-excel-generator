@@ -11,22 +11,19 @@ public class ExcelUtils {
 
     public static void writeData(List<Person> personList, Sheet sheet) {
         int startRow = 0;
-        // Write the data to the Sheet
-        for (int i = 0; i < personList.size(); i++) {
-            Person person = personList.get(i);
+
+        for (Person person:personList) {
             List<String> emailList = person.generateRandomEmails();
-            for ( int j = 0 ; j< emailList.size(); j ++){
+            for (String email : emailList) {
                 Row row = sheet.createRow(startRow + 1);
                 Cell cell = row.createCell(0);
                 cell.setCellValue(person.getProviders().getCompay());
                 Cell cell2 = row.createCell(1);
                 cell2.setCellValue(person.getEmri());
                 Cell cell3 = row.createCell(2);
-                cell3.setCellValue(emailList.get(j));
+                cell3.setCellValue(email);
                 startRow++;
             }
-
-
         }
     }
 
