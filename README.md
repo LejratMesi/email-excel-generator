@@ -18,7 +18,20 @@ Per ta exec jarin qe ndodhe tne target/email-generator.jar duhet qe te shkruani 
 ```
 
 
-Per ta bere te mundur qe te shkruani emaile duhet qe tek emaili i punes te aktivizoni 2 factory auth dhe pastaj te krijoni nje token per passwordin.
+Si te gjeneroni nje password ne  Gmail:
+
+Kliko ketu:  https://myaccount.google.com/security.
+
+Tek  sektori "Signing in to Google" , click mbi "App passwords".
+
+Nese te duhet duhet qe te fusesh email dhe passwrod
+
+Tek "App passwords" page, selekto "Mail" si applikacion dhe  "Other (custom name)" si paisje.
+
+Shkruaj nje emer te kostimizuar si psh  (e.g., "JavaMail").
+
+Kliko  "Generate".
+
 
 
 
