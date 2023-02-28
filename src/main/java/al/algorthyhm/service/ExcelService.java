@@ -10,6 +10,7 @@ import java.util.List;
 import al.algorthyhm.pojo.Person;
 import al.algorthyhm.pojo.Providers;
 import al.algorthyhm.utils.ExcelUtils;
+import jakarta.mail.internet.AddressException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
@@ -19,11 +20,11 @@ public class ExcelService {
 
     private final static Logger logger = LogManager.getLogger(ExcelService.class);
 
-    private String filePath;
+    private String sourcePath;
     private String destiantionPath;
 
     public ExcelService(String filePath, String destinationPath) {
-        this.filePath = filePath;
+        this.sourcePath = filePath;
         this.destiantionPath = destinationPath;
     }
 
@@ -31,7 +32,7 @@ public class ExcelService {
 
         logger.info("read method >>>>>>>>>");
         try {
-            FileInputStream inputStream = new FileInputStream(filePath);
+            FileInputStream inputStream = new FileInputStream(sourcePath);
             Workbook workbook = new XSSFWorkbook(inputStream);
 
             // Getting the first sheet in the Workbook
@@ -76,7 +77,11 @@ public class ExcelService {
 
         ExcelUtils.createHeaders(sheet);
         List<Person> personList = read();
-        ExcelUtils.writeData(personList,sheet);
+        try {
+            ExcelUtils.writeData(personList,sheet);
+        } catch (AddressException e) {
+            e.printStackTrace();
+        }
 
         try (FileOutputStream outputStream = new FileOutputStream(destiantionPath)) {
             workbook.write(outputStream);
