@@ -17,3 +17,8 @@ Per ta exec jarin qe ndodhe tne target/email-generator.jar duhet qe te shkruani 
  java -jar excel-generator-1.0-SNAPSHOT.jar
 ```
 
+
+Per ta bere te mundur qe te shkruani emaile duhet qe tek emaili i punes te aktivizoni 2 factory auth dhe pastaj te krijoni nje token per passwordin.
+
+
+
