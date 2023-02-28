@@ -3,23 +3,33 @@ package al.algorthyhm.utils;
 
 import al.algorthyhm.service.ExcelService;
 import jakarta.mail.*;
-import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EmailUtils {
-
+    public  String username ;
+    public  String password;
+    private static EmailUtils instance;
     private final static Logger logger = LogManager.getLogger(ExcelService.class);
 
-    public static void sendEmail(List<InternetAddress> emailList) {
+
+    private EmailUtils(){}
+
+    public static synchronized EmailUtils getInstance() {
+        if (instance == null) {
+            instance = new EmailUtils();
+        }
+        return instance;
+    }
+
+    public void sendEmail(List<InternetAddress> emailList) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             try {
@@ -31,17 +41,14 @@ public class EmailUtils {
         executor.shutdown();
     }
 
-    private static void send(List<InternetAddress> emailList) throws MessagingException {
+    private  void send(List<InternetAddress> emailList) throws MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        String username = "l.mesi@algorhythm.al";
-        String password = "rivuzbdrkkmycvsm";
-
-        Session session = null;
+        Session session;
         try {
             session = Session.getInstance(props, new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {

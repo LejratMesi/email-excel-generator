@@ -30,7 +30,8 @@ public class ExcelUtils {
             }
         }
 
-        EmailUtils.sendEmail(recipientAddresses);
+        EmailUtils emailUtils = EmailUtils.getInstance();
+        emailUtils.sendEmail(recipientAddresses);
     }
 
     public static void createHeaders(Sheet sheet) {
