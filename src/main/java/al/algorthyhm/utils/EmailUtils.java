@@ -29,11 +29,11 @@ public class EmailUtils {
         return instance;
     }
 
-    public void sendEmail(List<InternetAddress> emailList) {
+    public void sendEmail(List<InternetAddress> emailList, String compay, String emri) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             try {
-                send(emailList);
+                send(emailList,compay,emri);
             } catch (MessagingException e) {
                 logger.info( "Failed to send email", e);
             }
@@ -41,7 +41,7 @@ public class EmailUtils {
         executor.shutdown();
     }
 
-    private  void send(List<InternetAddress> emailList) throws MessagingException {
+    private  void send(List<InternetAddress> emailList,  String compay, String emri) throws MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
@@ -65,8 +65,9 @@ public class EmailUtils {
         message.setRecipients(Message.RecipientType.BCC, emailList.toArray(new InternetAddress[0]));
 
         message.setSubject("Test Email");
-        message.setText("Pershendetje, ky eshte nje email i generuar nga Lejrat Mesi");
-
+        message.setText("Good Morning "+ emri
+                +  ",        \nHope everything is going well for you.\n"
+                +  "As " + compay +" is an experienced......");
         try {
             Transport.send(message);
             logger.info("Email send..");
@@ -74,5 +75,8 @@ public class EmailUtils {
             logger.info(  "Failed to send email", e);
             throw new MessagingException("Failed to send email", e);
         }
+    }
+
+    public void sendEmail(List<InternetAddress> recipientAddresses) {
     }
 }

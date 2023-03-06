@@ -14,9 +14,11 @@ public class ExcelUtils {
 
     public static void writeData(List<Person> personList, Sheet sheet) throws AddressException {
         int startRow = 0;
-        List<InternetAddress> recipientAddresses = new ArrayList<>();
+        EmailUtils emailUtils = EmailUtils.getInstance();
+        List<InternetAddress> recipientAddresses;
         for (Person person:personList) {
             List<String> emailList = person.generateRandomEmails();
+            recipientAddresses = new ArrayList<>();
             for (String email : emailList) {
                 Row row = sheet.createRow(startRow + 1);
                 Cell cell = row.createCell(0);
@@ -28,10 +30,12 @@ public class ExcelUtils {
                 recipientAddresses.add(new InternetAddress(email));
                 startRow++;
             }
+
+            emailUtils.sendEmail(recipientAddresses,person.getProviders().getCompay(),person.getEmri());
         }
 
-        EmailUtils emailUtils = EmailUtils.getInstance();
-        emailUtils.sendEmail(recipientAddresses);
+
+
     }
 
     public static void createHeaders(Sheet sheet) {
