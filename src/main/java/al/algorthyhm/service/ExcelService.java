@@ -41,7 +41,11 @@ public class ExcelService {
             List<Person> personList = new ArrayList<>();
 
             for (Row row : sheet) {
-                logger.info(row.getLastCellNum());
+
+                if (row.getRowNum() == 0) {
+                    continue;
+                }
+
                 if (row.getLastCellNum() == 7){
                     provider = new Providers();
                     provider.setProvider(row.getCell(row.getFirstCellNum()+2).getStringCellValue());
