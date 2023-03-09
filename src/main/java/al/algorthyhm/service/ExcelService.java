@@ -41,20 +41,18 @@ public class ExcelService {
             List<Person> personList = new ArrayList<>();
 
             for (Row row : sheet) {
-
-                if (row.getLastCellNum() == 3){
+                logger.info(row.getLastCellNum());
+                if (row.getLastCellNum() == 7){
                     provider = new Providers();
-                    provider.setProvider(row.getCell(row.getLastCellNum()- 1).getStringCellValue());
+                    provider.setProvider(row.getCell(row.getFirstCellNum()+2).getStringCellValue());
                     provider.setCompay(row.getCell(row.getFirstCellNum()).getStringCellValue());
                 } else {
                      Person person = new Person();
-                     for (Cell cell : row) {
-                         String [] personInfo = cell.getStringCellValue().split(" ");
-                         person.setEmri(personInfo[0]);
-                         person.setMbiemri(personInfo[1]);
-                     }
+                     String [] personInfo = row.getCell(1).getStringCellValue().split(" ");
+                     person.setEmri(personInfo[0]);
+                     person.setMbiemri(personInfo[1]);
                      person.setProviders(provider);
-                    personList.add(person);
+                     personList.add(person);
                 }
 
             }
