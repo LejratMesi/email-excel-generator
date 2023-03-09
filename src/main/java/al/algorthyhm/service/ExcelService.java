@@ -19,6 +19,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelService {
 
     private final static Logger logger = LogManager.getLogger(ExcelService.class);
+    private final static Integer INDEX_OF_NAME_IN_CELL = 1;
+    private final static Integer INDEX_OF_FIRST_ROW = 0;
+    private final static Integer INDEX_OF_COMPANY_IN_CELL = 2;
 
     private String sourcePath;
     private String destiantionPath;
@@ -34,25 +37,23 @@ public class ExcelService {
         try {
             FileInputStream inputStream = new FileInputStream(sourcePath);
             Workbook workbook = new XSSFWorkbook(inputStream);
-
-            // Getting the first sheet in the Workbook
             Sheet sheet = workbook.getSheetAt(0);
             Providers provider = null;
             List<Person> personList = new ArrayList<>();
 
             for (Row row : sheet) {
 
-                if (row.getRowNum() == 0) {
+                if (row.getRowNum() == INDEX_OF_FIRST_ROW) {
                     continue;
                 }
 
-                if (row.getLastCellNum() == 7){
+                if (row.getCell(0) != null) {
                     provider = new Providers();
-                    provider.setProvider(row.getCell(row.getFirstCellNum()+2).getStringCellValue());
+                    provider.setProvider(row.getCell(INDEX_OF_COMPANY_IN_CELL).getStringCellValue());
                     provider.setCompay(row.getCell(row.getFirstCellNum()).getStringCellValue());
                 } else {
                      Person person = new Person();
-                     String [] personInfo = row.getCell(1).getStringCellValue().split(" ");
+                     String [] personInfo = row.getCell(INDEX_OF_NAME_IN_CELL).getStringCellValue().split(" ");
                      person.setEmri(personInfo[0]);
                      person.setMbiemri(personInfo[1]);
                      person.setProviders(provider);
@@ -87,6 +88,7 @@ public class ExcelService {
 
         try (FileOutputStream outputStream = new FileOutputStream(destiantionPath)) {
             workbook.write(outputStream);
+            logger.info("Exceli u gjenerua");
             workbook.close();
         } catch (IOException e) {
             e.printStackTrace();
