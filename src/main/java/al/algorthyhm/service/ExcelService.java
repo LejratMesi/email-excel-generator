@@ -53,12 +53,14 @@ public class ExcelService {
                     provider.setProvider(row.getCell(INDEX_OF_COMPANY_IN_CELL).getStringCellValue());
                     provider.setCompay(row.getCell(row.getFirstCellNum()).getStringCellValue());
                 } else {
-                     Person person = new Person();
-                     String [] personInfo = row.getCell(INDEX_OF_NAME_IN_CELL).getStringCellValue().split(" ");
-                     person.setEmri(personInfo[0]);
-                     person.setMbiemri(personInfo[1]);
-                     person.setProviders(provider);
-                     personList.add(person);
+                    if(row.getCell(INDEX_OF_NAME_IN_CELL) != null && !row.getCell(INDEX_OF_NAME_IN_CELL).getStringCellValue().isEmpty()) {
+                        Person person = new Person();
+                        String[] personInfo = row.getCell(INDEX_OF_NAME_IN_CELL).getStringCellValue().split(" ");
+                        person.setEmri(personInfo[0]);
+                        person.setMbiemri(personInfo[1]);
+                        person.setProviders(provider);
+                        personList.add(person);
+                    }
                 }
 
             }
