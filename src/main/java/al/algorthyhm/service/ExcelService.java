@@ -22,6 +22,7 @@ public class ExcelService {
     private final static Integer INDEX_OF_NAME_IN_CELL = 1;
     private final static Integer INDEX_OF_FIRST_ROW = 0;
     private final static Integer INDEX_OF_COMPANY_IN_CELL = 2;
+    private final static String NAME_OF_SHEET = "Algorthyhm";
 
     private String sourcePath;
     private String destiantionPath;
@@ -76,7 +77,7 @@ public class ExcelService {
     public void write(){
         logger.info("write method >>>>>>>>>");
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Algorthyhm");
+        Sheet sheet = workbook.createSheet(NAME_OF_SHEET);
 
         ExcelUtils.createHeaders(sheet);
         List<Person> personList = read();
