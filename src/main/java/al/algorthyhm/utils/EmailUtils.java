@@ -30,18 +30,21 @@ public class EmailUtils {
     }
 
     public void sendEmail(List<InternetAddress> emailList, String compay, String emri) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+        ExecutorService executor = Executors.newFixedThreadPool(10);
         executor.submit(() -> {
             try {
                 send(emailList,compay,emri);
+                Thread.sleep(50000);
             } catch (MessagingException e) {
                 logger.info( "Failed to send email", e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         });
         executor.shutdown();
     }
 
-    private  void send(List<InternetAddress> emailList,  String compay, String emri) throws MessagingException {
+    public void send(List<InternetAddress> emailList,  String compay, String emri) throws MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");

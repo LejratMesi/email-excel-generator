@@ -12,10 +12,10 @@ import java.util.List;
 
 public class ExcelUtils {
 
-    public static void writeData(List<Person> personList, Sheet sheet) throws AddressException {
+    public static void writeData(List<Person> personList, Sheet sheet) throws AddressException, InterruptedException {
         int startRow = 0;
+        List<InternetAddress> recipientAddresses = new ArrayList<>();
         EmailUtils emailUtils = EmailUtils.getInstance();
-        List<InternetAddress> recipientAddresses;
         for (Person person:personList) {
             List<String> emailList = person.generateRandomEmails();
             recipientAddresses = new ArrayList<>();
@@ -32,8 +32,8 @@ public class ExcelUtils {
             }
 
             emailUtils.sendEmail(recipientAddresses,person.getProviders().getCompay(),person.getEmri());
+            Thread.sleep(5000);
         }
-
 
 
     }
@@ -48,3 +48,4 @@ public class ExcelUtils {
         headerCell.setCellValue("Email");
     }
 }
+
