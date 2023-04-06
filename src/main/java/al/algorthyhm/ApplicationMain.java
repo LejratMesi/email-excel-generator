@@ -20,6 +20,9 @@ public class ApplicationMain {
         System.out.println("Ju lutem vendosni tokenin e emailit");
         emailUtils.password = input.nextLine();
         System.out.println("Programi po gjeneron excelin");
+
+
+        
         ExcelService reader = new ExcelService(path, destinationPath);
         reader.write();
 

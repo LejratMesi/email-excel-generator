@@ -48,7 +48,7 @@ public class ExcelService {
                     continue;
                 }
 
-                if (row.getCell(0) != null) {
+                if (row.getCell(0) != null && !row.getCell(0).getStringCellValue().isEmpty()) {
                     provider = new Providers();
                     provider.setProvider(row.getCell(INDEX_OF_COMPANY_IN_CELL).getStringCellValue());
                     provider.setCompay(row.getCell(row.getFirstCellNum()).getStringCellValue());
@@ -86,7 +86,9 @@ public class ExcelService {
         try {
             ExcelUtils.writeData(personList,sheet);
         } catch (AddressException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
         try (FileOutputStream outputStream = new FileOutputStream(destiantionPath)) {
@@ -94,7 +96,8 @@ public class ExcelService {
             logger.info("Exceli u gjenerua");
             workbook.close();
         } catch (IOException e) {
-            e.printStackTrace();
+
+            System.out.println(e.getMessage());
         }
 
     }
